@@ -1,7 +1,7 @@
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
-        System.out.println("Hello, World again!");
-        System.out.println("Hello, World again and again!");
+        Grid gameGrid = new Grid();
+        System.out.println(gameGrid);
+
     }
 }
