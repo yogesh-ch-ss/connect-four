@@ -1,17 +1,18 @@
 public class Grid {
-    private char gameGrid[][] = new char[6][7];
+    private char grid[][] = new char[6][7];
 
     public Grid() {
-        // initialize an empty grid
+        // Initialize an empty grid
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
-                gameGrid[i][j] = '.';
+                grid[i][j] = '.';
             }
         }
     }
 
     public String toString() {
-        // returning the 2D game grid with the column numbers
+
+        // Returning the 2D game grid with the column numbers
 
         String output = "\n";
         for (int j = 0; j < 7; j++) {
@@ -22,7 +23,7 @@ public class Grid {
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
-                output += String.format(" %c", this.gameGrid[i][j]);
+                output += String.format(" %c", this.grid[i][j]);
             }
             output += "\n";
         }
@@ -32,16 +33,29 @@ public class Grid {
 
     }
 
+    public boolean dropDisc(Disc disc) {
 
-    public void dropDisc(Disc discObj) {
-        
+        for (int i = this.grid.length - 1; i >= 0; i--) {
+            if (this.grid[i][disc.getCol()] == '.') {
+                this.grid[i][disc.getCol()] = disc.getSymbol();
+                disc.setRow(i);
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public boolean isFull() {
+        for (int j = 0; j < 7; j++) {
+            if (this.grid[0][j] == '.') {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void checkWin() {
-
-    }
-
-    public void checkFull() {
 
     }
 
