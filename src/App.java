@@ -30,7 +30,7 @@ public class App {
             p2Symbol = 'X';
 
         }
-        System.out.println("Player2 - Your Symbol is >>> " + p2Symbol);
+        System.out.println("Player 2 - Your Symbol is >>> " + p2Symbol);
 
         System.out.println(
                 String.format("\n - %-15s %-15s\n > %-15s %c\n > %-15s %c",
@@ -52,61 +52,9 @@ public class App {
 
         System.out.println(grid);
 
-        takeTurns(player1, player2);
-
-        System.out.println(grid);
-
     }
 
     public static void takeTurns(Player player1, Player player2) {
-
-        Player currentPlayer = player1;
-
-        Scanner s1 = new Scanner(System.in);
-
-        {
-            System.out.print(
-                    String.format("%s (%c) insert disc. Enter the column number: ",
-                            currentPlayer.getName(), currentPlayer.getSymbol()));
-
-            int col = -1;
-
-            if (s1.hasNextInt()) {
-                col = s1.nextInt() - 1; // Adjust for zero-based indexing
-                if (col < 0 || col >= 7) {
-                    System.out.println("Invalid column number. Please enter a number between 1 and 7.");
-                }
-            } else {
-                System.out.println("Invalid input. Please enter a valid integer.");
-                s1.next(); // Clear the invalid input
-            }
-
-            // int col = s.nextInt() - 1;
-            // s.nextLine();
-
-            Disc disc = new Disc(currentPlayer.getSymbol(), col);
-            currentPlayer.getGrid().dropDisc(disc);
-            System.out.println(currentPlayer.getGrid());
-
-        }
-
-        currentPlayer = player2;
-        {
-            System.out.print(
-                    String.format("%s (%c) insert disc. Enter the column number: ",
-                            currentPlayer.getName(), currentPlayer.getSymbol()));
-
-            int col = 5;
-            // int col = s.nextInt() - 1;
-            // s.nextLine();
-
-            Disc disc = new Disc(currentPlayer.getSymbol(), col);
-            currentPlayer.getGrid().dropDisc(disc);
-            System.out.println(currentPlayer.getGrid());
-
-        }
-
-        s1.close();
 
     }
 }
