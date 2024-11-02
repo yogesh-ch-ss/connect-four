@@ -36,10 +36,9 @@ public class App {
                 String.format("\n - %-15s %-15s\n > %-15s %c\n > %-15s %c",
                         "PLAYER", "SYMBOL", p1Name, p1Symbol, p2Name, p2Symbol));
 
-        s.close();
-
         // Initialising the game grid
         Grid grid = new Grid();
+        System.out.println(grid);
 
         // Creating player objects
         Player player1 = new Player(p1Name, p1Symbol, grid);
@@ -47,14 +46,32 @@ public class App {
 
         // Both the players play on the same grid "grid".
         // Thus, the same grid object is referenced.
-        // Updating player1's grid will reflect in player2's grid, and vice-versa, as
-        // they both are the essentially same referenced grid.
+        // Updating player1's grid will reflect in player2's grid, and vice-versa,
+        // as they both are the essentially same referenced grid.
 
-        System.out.println(grid);
+        
+        playGame(player1, player2, s);
+
+        System.out.println("\nThank you for playing connect-four.\n");
+        System.out.println("< Developed by Yogesh Chandra Singh Samant >\n\n");
+
+        s.close();
 
     }
 
-    public static void takeTurns(Player player1, Player player2) {
+    public static void playGame(Player player1, Player player2, Scanner s) {
+
+        Player currentplayer = player1;
+
+        while (!currentplayer.getGrid().isFull()) {
+            currentplayer.takeTurn(s);
+            System.out.println(currentplayer.getGrid());
+            currentplayer = (currentplayer == player1) ? player2 : player1;
+        }
+
+        System.out.println("Grid is full.\n");
+        System.out.println("GAME OVER");
 
     }
+
 }

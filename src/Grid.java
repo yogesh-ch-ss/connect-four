@@ -2,12 +2,12 @@ public class Grid {
     private Disc grid[][] = new Disc[6][7];
 
     public Grid() {
-        // Initialize an empty grid
-        
+        // Initialize an empty 6x7 grid
+
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
-                grid[i][j] = new Disc('.', j);
-                grid[i][j].setRow(i);
+                // Store empty discs => symbol '.'
+                grid[i][j] = new Disc('.', i, j);
             }
         }
     }
@@ -15,16 +15,21 @@ public class Grid {
     public String toString() {
         // Returning the 2D game grid with the column numbers
 
-        String output = "\n";
+        String output = "\n|";
         for (int j = 0; j < 7; j++) {
-            output += String.format(" %d", j + 1);
+            output += String.format(" %d |", j);
+        }
 
+        output += "\n|";
+        for (int j = 0; j < 7; j++) {
+            output += "-+-|";
         }
         output += "\n";
 
         for (int i = 0; i < 6; i++) {
+            output += "|";
             for (int j = 0; j < 7; j++) {
-                output += String.format(" %c", this.grid[i][j].getSymbol());
+                output += String.format(" %c |", this.grid[i][j].getSymbol());
             }
             output += "\n";
         }
@@ -34,20 +39,25 @@ public class Grid {
 
     }
 
-    public boolean dropDisc(Disc disc) {
+    public boolean dropDisc(char symbol, int col) {
+        // Returns true if the disc is inserted successfully; false otherwise
 
-        for (int i = this.grid.length - 1; i >= 0; i--) {
-            if (this.grid[i][disc.getCol()].getSymbol() == '.') {
-                this.grid[i][disc.getCol()] = disc;
-                disc.setRow(i);
+        for (int row = this.grid.length - 1; row >= 0; row--) {
+            if (this.grid[row][col].getSymbol() == '.') {
+                // Create a disc object with the given symbol and the column,
+                // and the row obtained from this method
+                Disc disc = new Disc(symbol, row, col);
+                this.grid[row][col] = disc;
                 return true;
             }
         }
+        // When the given column is full, the disc cannot be dropped => unsuccessful
         return false;
 
     }
 
     public boolean isFull() {
+        // Checks if the top row is fully filled
         for (int j = 0; j < 7; j++) {
             if (this.grid[0][j].getSymbol() == '.') {
                 return false;
