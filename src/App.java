@@ -49,7 +49,6 @@ public class App {
         // Updating player1's grid will reflect in player2's grid, and vice-versa,
         // as they both are the essentially same referenced grid.
 
-        
         playGame(player1, player2, s);
 
         System.out.println("\nThank you for playing connect-four.\n");
@@ -62,11 +61,21 @@ public class App {
     public static void playGame(Player player1, Player player2, Scanner s) {
 
         Player currentplayer = player1;
+        boolean isWinner = false;
 
-        while (!currentplayer.getGrid().isFull()) {
-            currentplayer.takeTurn(s);
+        while (!currentplayer.getGrid().isFull() && !isWinner) {
+            // Current player will take a turn and will check if the player won the game.
+            isWinner = currentplayer.takeTurn(s);
             System.out.println(currentplayer.getGrid());
+
+            if (isWinner) {
+                System.out.println(
+                        String.format("%s (%c) won the game!", currentplayer.getName(), currentplayer.getSymbol()));
+                return;
+            }
+
             currentplayer = (currentplayer == player1) ? player2 : player1;
+
         }
 
         System.out.println("Grid is full.\n");

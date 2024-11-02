@@ -28,11 +28,14 @@ public class Player {
     }
 
     public boolean takeTurn(Scanner s) {
-        // Returns true if the turn is successfull (disc is inserted successfully);
-        // false otherwise
-        // Uses the same acanner object from App.java
+        // Returns true if the player has won the game after taking the turn;
+        // false otherwise since the game has to go on.
+
+        // Uses the same scanner object from App.java
 
         int col = -1;
+        int row = -1;
+
         boolean successfullDiscDrop = false;
 
         while (!successfullDiscDrop) {
@@ -43,22 +46,31 @@ public class Player {
 
             if (col >= 0 && col <= 6) {
                 // If the entered column is valid, disc drop will be attempted.
-                successfullDiscDrop = this.grid.dropDisc(this.symbol, col);
+
+                // successfullDiscDrop is true when the dropDisc() returns a valid row.
+                // Unsuccessful drop disc is when dropDisc() returns -1. (ref. Grid.java)
+                row = this.grid.dropDisc(this.symbol, col);
+                successfullDiscDrop = (row != -1) ? true : false;
 
                 if (!successfullDiscDrop) {
-                    // If disc drop is unsuccessful (column is full => ref. Grid.java)
+                    // If disc drop is unsuccessful (column is full)
                     System.out.println("- - - Column is full. Try again.");
+                } else {
+                    System.out.println(String.format("Disc (%c) placed at column: %d, row: %d", this.symbol, col, row));
                 }
             } else {
                 System.out.println("- - - Invalid column number. Try again.");
             }
         }
 
+        // After successful disc drop, checking if the player won the game.
+        boolean isWinner = this.grid.checkWin(symbol, row, col);
+
         // Returning True after the turn is over once disc drop is successful.
         // The turn cannot be unsuccessful because takeTurn() will only be called
         // when the grid is not empty => a disc can still be dropped.
-        // This return condition is kept for future improvement, and is not necessary.
-        return true;
+
+        return isWinner;
 
     }
 
