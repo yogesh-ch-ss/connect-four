@@ -68,7 +68,7 @@ public class Grid {
 
     public boolean checkWin(char symbol, int row, int col) {
         return this.checkColWin(symbol, row, col) || this.checkRowWin(symbol, row, col)
-                || this.checkDiagonalWinTLBR(symbol, row, col);
+                || this.checkDiagonalWinTLBR(symbol, row, col) || this.checkDiagonalWinBLTR(symbol, row, col);
     }
 
     public boolean checkRowWin(char symbol, int row, int col) {
@@ -135,7 +135,7 @@ public class Grid {
         int i = row - 1;
         int j = col - 1;
 
-        // Top-Left diagonal
+        // Top-Left diagonal - reduce row, reduce column.
         while (i > -1 && j > -1) {
             // If row exceeds the first row (-1),
             // OR column exceeds the first column (-1),
@@ -158,7 +158,7 @@ public class Grid {
         i = row + 1;
         j = col + 1;
 
-        // Bottom-Right diagonal.
+        // Bottom-Right diagonal - increase row, increase column.
         while (i < 6 && j < 7) {
             // If row exceeds the last row (6),
             // OR column exceeds the last column (7),
@@ -175,6 +175,61 @@ public class Grid {
                 return true;
 
             i += 1;
+            j += 1;
+        }
+
+        // Returns false since 4 symbols are not yet continous in a diagonal.
+        return false;
+    }
+
+    public Boolean checkDiagonalWinBLTR(char symbol, int row, int col) {
+        // Time complexity = O(1) - constant.
+        // Checks if the Bottom-Left-Top-Right '/' diagonal symbols are the same.
+        int count = 1;
+
+        int i = row + 1;
+        int j = col - 1;
+
+        // Bottom-Left diagonal - increase row, reduce column.
+        while (i < 6 && j > -1) {
+            // If row exceeds the last row (6),
+            // OR column exceeds the first column (-1),
+            // OR if the symbold don't match, count stops counting.
+            // This while will run only when both the row AND the column are in the range.
+            if (this.grid[i][j].getSymbol() != symbol) {
+                break;
+            }
+
+            count += 1;
+
+            // Returns true when 4 symbols are continous in a diagonal.
+            if (count == 4)
+                return true;
+
+            i += 1;
+            j -= 1;
+        }
+
+        i = row - 1;
+        j = col + 1;
+
+        // Top-Right diagonal - reduce row, increase column.
+        while (i > -1 && j < 7) {
+            // If row exceeds the last row (6),
+            // OR column exceeds the last column (7),
+            // OR if the symbold don't match, count stops counting.
+            // This while will run only when both the row AND the column are in the range.
+            if (this.grid[i][j].getSymbol() != symbol) {
+                break;
+            }
+
+            count += 1;
+
+            // Returns true when 4 symbols are continous in a diagonal.
+            if (count == 4)
+                return true;
+
+            i -= 1;
             j += 1;
         }
 
