@@ -74,6 +74,7 @@ public class App {
                 return;
             }
 
+            // Alternating current players.
             currentplayer = (currentplayer == player1) ? player2 : player1;
 
         }
