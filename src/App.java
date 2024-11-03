@@ -59,6 +59,8 @@ public class App {
     }
 
     public static void playGame(Player player1, Player player2, Scanner s) {
+        // The game playing method which runs until either the grid gets full,
+        // or when a player wins.
 
         Player currentplayer = player1;
         boolean isWinner = false;
@@ -74,7 +76,7 @@ public class App {
                 return;
             }
 
-            // Alternating current players.
+            // Alternating current player to take turns.
             currentplayer = (currentplayer == player1) ? player2 : player1;
 
         }

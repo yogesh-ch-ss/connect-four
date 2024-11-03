@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
@@ -39,28 +40,40 @@ public class Player {
         boolean successfullDiscDrop = false;
 
         while (!successfullDiscDrop) {
-            System.out
-                    .print(String.format("%s (%c) - Insert Disc - Enter the column number: ", this.name, this.symbol));
-            col = s.nextInt();
-            s.nextLine();
 
-            if (col >= 0 && col <= 6) {
-                // If the entered column is valid, disc drop will be attempted.
+            try {
 
-                // successfullDiscDrop is true when the dropDisc() returns a valid row.
-                // Unsuccessful drop disc is when dropDisc() returns -1. (ref. Grid.java)
-                row = this.grid.dropDisc(this.symbol, col);
-                successfullDiscDrop = (row != -1) ? true : false;
+                System.out
+                        .print(String.format("%s (%c) - Insert Disc - Enter the column number: ", this.name,
+                                this.symbol));
+                col = s.nextInt() - 1;
+                s.nextLine();
 
-                if (!successfullDiscDrop) {
-                    // If disc drop is unsuccessful (column is full)
-                    System.out.println("- - - Column is full. Try again.");
+                if (col >= 0 && col <= 6) {
+                    // If the entered column is valid, disc drop will be attempted.
+
+                    // successfullDiscDrop is true when the dropDisc() returns a valid row.
+                    // Unsuccessful drop disc is when dropDisc() returns -1. (ref. Grid.java)
+                    row = this.grid.dropDisc(this.symbol, col);
+                    successfullDiscDrop = (row != -1) ? true : false;
+
+                    if (!successfullDiscDrop) {
+                        // If disc drop is unsuccessful (column is full)
+                        System.out.println("- - - Column is full. Try again.\n");
+                    } else {
+                        System.out.println(String.format("Disc (%c) placed at column: %d, row: %d", this.symbol,
+                                col + 1, row + 1));
+                    }
                 } else {
-                    System.out.println(String.format("Disc (%c) placed at column: %d, row: %d", this.symbol, col, row));
+                    // When the input is not an integer value.
+                    System.out.println("- - - Invalid column number. Try again.\n");
                 }
-            } else {
-                System.out.println("- - - Invalid column number. Try again.");
+
+            } catch (InputMismatchException e) {
+                System.out.println("- - - Invalid input. Please enter a valid integer.\n");
+                s.nextLine();
             }
+
         }
 
         // After successful disc drop, checking if the player won the game.

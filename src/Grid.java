@@ -15,19 +15,19 @@ public class Grid {
     public String toString() {
         // Returning the 2D game grid with the column numbers.
 
-        String output = "\n|";
+        String output = "\n * |";
         for (int j = 0; j < 7; j++) {
-            output += String.format(" %d |", j);
+            output += String.format(" %d |", j + 1);
         }
 
-        output += "\n|";
+        output += "\n---|";
         for (int j = 0; j < 7; j++) {
             output += "-+-|";
         }
         output += "\n";
 
         for (int i = 0; i < 6; i++) {
-            output += "|";
+            output += String.format(" %d |", i + 1);
             for (int j = 0; j < 7; j++) {
                 output += String.format(" %c |", this.grid[i][j].getSymbol());
             }
