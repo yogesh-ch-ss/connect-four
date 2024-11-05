@@ -43,6 +43,7 @@ public class Player {
 
             try {
 
+                // Trying to get the right input type for column - integer.
                 System.out
                         .print(String.format("%s (%c) - Insert Disc - Enter the column number: ", this.name,
                                 this.symbol));
@@ -79,10 +80,7 @@ public class Player {
         // After successful disc drop, checking if the player won the game.
         boolean isWinner = this.grid.checkWin(symbol, row, col);
 
-        // Returning True after the turn is over once disc drop is successful.
-        // The turn cannot be unsuccessful because takeTurn() will only be called
-        // when the grid is not empty => a disc can still be dropped.
-
+        // Returning if the player won the game.
         return isWinner;
 
     }
