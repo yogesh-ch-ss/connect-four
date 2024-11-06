@@ -16,20 +16,20 @@ public class Grid {
         // Returning the 2D game grid with the column numbers.
 
         String output = "\n * |";
-        for (int j = 0; j < 7; j++) {
+        for (int j = 0; j < this.getGridColumnLength(); j++) {
             output += String.format(" %d |", j + 1);
         }
 
         output += "\n---|";
-        for (int j = 0; j < 7; j++) {
+        for (int j = 0; j < this.getGridColumnLength(); j++) {
             output += "-+-|";
         }
         output += "\n";
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < this.getGridRowLength(); i++) {
             output += String.format(" %d |", i + 1);
-            for (int j = 0; j < 7; j++) {
-                output += String.format(" %c |", this.grid[i][j].getSymbol());
+            for (int j = 0; j < this.getGridColumnLength(); j++) {
+                output += String.format(" %s |", this.grid[i][j]);
             }
             output += "\n";
         }
@@ -70,7 +70,7 @@ public class Grid {
 
     public boolean isFull() {
         // Checks if the top row is fully filled.
-        for (int j = 0; j < 7; j++) {
+        for (int j = 0; j < this.getGridColumnLength(); j++) {
             if (this.grid[0][j].getSymbol() == '.') {
                 return false;
             }
@@ -171,7 +171,7 @@ public class Grid {
         j = col + 1;
 
         // Bottom-Right diagonal - increase row, increase column.
-        while (i < 6 && j < 7) {
+        while (i < this.getGridRowLength() && j < this.getGridColumnLength()) {
             // If row exceeds the last row (6),
             // OR column exceeds the last column (7),
             // OR if the symbold don't match, count stops counting.
@@ -203,7 +203,7 @@ public class Grid {
         int j = col - 1;
 
         // Bottom-Left diagonal - increase row, reduce column.
-        while (i < 6 && j > -1) {
+        while (i < this.getGridRowLength() && j > -1) {
             // If row exceeds the last row (6),
             // OR column exceeds the first column (-1),
             // OR if the symbold don't match, count stops counting.
@@ -226,7 +226,7 @@ public class Grid {
         j = col + 1;
 
         // Top-Right diagonal - reduce row, increase column.
-        while (i > -1 && j < 7) {
+        while (i > -1 && j < this.getGridColumnLength()) {
             // If row exceeds the last row (6),
             // OR column exceeds the last column (7),
             // OR if the symbold don't match, count stops counting.

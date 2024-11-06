@@ -9,6 +9,10 @@ public class Disc {
         this.col = col;
     }
 
+    public String toString() {
+        return "" + this.symbol;
+    }
+
     public char getSymbol() {
         return this.symbol;
     }
