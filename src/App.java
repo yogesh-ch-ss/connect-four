@@ -67,6 +67,10 @@ public class App {
         Player currentplayer = player1;
         boolean isWinner = false;
 
+        // SaveGame test.
+        SaveGame saveGame = new SaveGame(currentplayer.getGrid(), player1, player2);
+        saveGame.saveThisGame();
+
         while (!currentplayer.getGrid().isFull() && !isWinner) {
             // Current player will take a turn and will check if the player won the game.
             isWinner = currentplayer.takeTurn(s);
