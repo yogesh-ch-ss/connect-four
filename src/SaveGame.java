@@ -40,6 +40,14 @@ public class SaveGame {
             savefile.write(player2.getName() + "\n");
             savefile.write(player2.getSymbol() + "\n");
 
+            for(int i  = 0; i < this.grid.getGridRowLength(); i++) {
+                for(int j = 0; j < this.grid.getGridColumnLength(); j++){
+                    char symbol = this.grid.getDiscSymbolAt(i, j);
+                    savefile.write(symbol + " ");
+                }
+                savefile.write("\n");
+            }
+
             savefile.close();
 
             System.out.println("Save file write successful!");

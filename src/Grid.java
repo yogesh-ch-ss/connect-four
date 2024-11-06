@@ -39,10 +39,22 @@ public class Grid {
 
     }
 
+    public int getGridRowLength(){
+        return this.grid.length;
+    }
+
+    public int getGridColumnLength() {
+        return this.grid[0].length;
+    }
+
+    public char getDiscSymbolAt(int i, int j){
+        return this.grid[i][j].getSymbol();
+    }
+
     public int dropDisc(char symbol, int col) {
         // Returns the inserted row if the disc is inserted successfully; -1 otherwise.
 
-        for (int row = this.grid.length - 1; row >= 0; row--) {
+        for (int row = this.getGridRowLength() - 1; row >= 0; row--) {
             if (this.grid[row][col].getSymbol() == '.') {
                 // Create a disc object with the given symbol and the column,
                 // and the row obtained from this method.
