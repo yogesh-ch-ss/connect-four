@@ -79,7 +79,7 @@ public class App {
             if (isWinner) {
                 System.out.println(
                         String.format("%s (%c) won the game!", currentplayer.getName(), currentplayer.getSymbol()));
-                return;
+                break;
             }
 
             // Alternating current player to take turns.
@@ -87,7 +87,17 @@ public class App {
 
         }
 
-        System.out.println("Grid is full.\n");
+        LoadGame loadGame = new LoadGame();
+        Object[] gameInfo = loadGame.LoadSavedGame();
+        Player loadPlayer1 = (Player) gameInfo[0];
+        Player loadPlayer2 = (Player) gameInfo[1];
+        Grid loadGrid = (Grid) gameInfo[2];
+
+        System.out.println(loadPlayer1);
+        System.out.println(loadPlayer2);
+        System.out.println(loadGrid);
+
+        // System.out.println("Grid is full.\n");
         System.out.println("GAME OVER");
 
     }

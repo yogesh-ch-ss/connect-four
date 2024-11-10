@@ -43,7 +43,7 @@ public class SaveGame {
             for(int i  = 0; i < this.grid.getGridRowLength(); i++) {
                 for(int j = 0; j < this.grid.getGridColumnLength(); j++){
                     char symbol = this.grid.getDiscSymbolAt(i, j);
-                    savefile.write(symbol + " ");
+                    savefile.write(symbol + "");
                 }
                 savefile.write("\n");
             }
