@@ -42,7 +42,6 @@ public class LoadGame {
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occured.");
-            e.printStackTrace();
         }
         return new Object[0];
     }

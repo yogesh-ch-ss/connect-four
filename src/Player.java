@@ -13,7 +13,7 @@ public class Player {
     }
 
     public String toString() {
-        return "Player: " + this.name + "(" + this.symbol + ")";
+        return "Player: " + this.name + " (" + this.symbol + ")";
     }
 
     public String getName() {
@@ -28,7 +28,7 @@ public class Player {
         return grid;
     }
 
-    public boolean takeTurn(Scanner s) {
+    public boolean takeTurn(Scanner s, Player opponentPlayer) {
         // Returns true if the player has won the game after taking the turn;
         // false otherwise since the game has to go on.
 
@@ -45,10 +45,19 @@ public class Player {
 
                 // Trying to get the right input type for column - integer.
                 System.out
-                        .print(String.format("%s (%c) - Insert Disc - Enter the column number: ", this.name,
+                        .print(String.format(
+                                "%s (%c) - Insert Disc - Enter the column number (or enter '0' to save and exit): ",
+                                this.name,
                                 this.symbol));
                 col = s.nextInt() - 1;
                 s.nextLine();
+
+                if (col == -1) {
+                    SaveGame saveGame = new SaveGame(this.getGrid(), this, opponentPlayer);
+                    saveGame.saveThisGame();
+                    System.out.println("Game saved successfully!");
+                    System.exit(0);
+                }
 
                 if (col >= 0 && col <= 6) {
                     // If the entered column is valid, disc drop will be attempted.

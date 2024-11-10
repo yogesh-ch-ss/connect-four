@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Scanner;
 
 public class App {
@@ -9,52 +10,97 @@ public class App {
 
         Scanner s = new Scanner(System.in);
 
-        System.out.print("Player 1 - Enter your Name >>> ");
-        String p1Name = s.nextLine();
-
-        char p1Symbol = 0;
+        int startGame = 0;
         do {
-            System.out.print("Player 1 - Pick your Symbol -> X / O >>> ");
-            p1Symbol = s.nextLine().charAt(0);
-        } while (p1Symbol != 'x' && p1Symbol != 'o' && p1Symbol != 'X' && p1Symbol != 'O');
+            System.out.print("Select game: \n 1. New Game \n 2. Load Saved Game \n\nEnter 1 or 2 >>>");
+            startGame = s.nextInt();
+            s.nextLine();
+        } while (startGame != 1 && startGame != 2);
 
-        p1Symbol = Character.toUpperCase(p1Symbol);
+        if (startGame == 1) {
+            System.out.print("Player 1 - Enter your Name >>> ");
+            String p1Name = s.nextLine();
 
-        System.out.print("Player 2 - Enter your Name >>> ");
-        String p2Name = s.nextLine();
+            char p1Symbol = 0;
+            do {
+                System.out.print("Player 1 - Pick your Symbol -> X / O >>> ");
+                p1Symbol = s.nextLine().charAt(0);
+            } while (p1Symbol != 'x' && p1Symbol != 'o' && p1Symbol != 'X' && p1Symbol != 'O');
 
-        char p2Symbol = 0;
-        if (p1Symbol == 'x' || p1Symbol == 'X') {
-            p2Symbol = 'O';
+            p1Symbol = Character.toUpperCase(p1Symbol);
+
+            System.out.print("Player 2 - Enter your Name >>> ");
+            String p2Name = s.nextLine();
+
+            char p2Symbol = 0;
+            if (p1Symbol == 'x' || p1Symbol == 'X') {
+                p2Symbol = 'O';
+            } else {
+                p2Symbol = 'X';
+
+            }
+            System.out.println("Player 2 - Your Symbol is >>> " + p2Symbol);
+
+            System.out.println(
+                    String.format("\n - %-15s %-15s\n > %-15s %c\n > %-15s %c",
+                            "PLAYER", "SYMBOL", p1Name, p1Symbol, p2Name, p2Symbol));
+
+            // Initialising the game grid
+            Grid grid = new Grid();
+            System.out.println(grid);
+
+            // Creating player objects
+            Player player1 = new Player(p1Name, p1Symbol, grid);
+            Player player2 = new Player(p2Name, p2Symbol, grid);
+
+            playGame(player1, player2, s);
+
         } else {
-            p2Symbol = 'X';
+            LoadGame loadGame = new LoadGame();
+            Object[] gameInfo = loadGame.LoadSavedGame();
+
+            if (gameInfo.length < 1) {
+                System.out.println("No savegame exists. Goodbye!\n");
+                System.exit(0);
+            }
+
+            Player player1 = (Player) gameInfo[0];
+            Player player2 = (Player) gameInfo[1];
+            Grid grid = (Grid) gameInfo[2];
+
+            System.out.println(player1);
+            System.out.println(player2);
+            System.out.println(grid);
+
+            playGame(player1, player2, s);
 
         }
-        System.out.println("Player 2 - Your Symbol is >>> " + p2Symbol);
-
-        System.out.println(
-                String.format("\n - %-15s %-15s\n > %-15s %c\n > %-15s %c",
-                        "PLAYER", "SYMBOL", p1Name, p1Symbol, p2Name, p2Symbol));
-
-        // Initialising the game grid
-        Grid grid = new Grid();
-        System.out.println(grid);
-
-        // Creating player objects
-        Player player1 = new Player(p1Name, p1Symbol, grid);
-        Player player2 = new Player(p2Name, p2Symbol, grid);
 
         // Both the players play on the same grid "grid".
         // Thus, the same grid object is referenced.
         // Updating player1's grid will reflect in player2's grid, and vice-versa,
         // as they both are the essentially same referenced grid.
 
-        playGame(player1, player2, s);
+        File file = new File("src/savefile.txt");
+
+        // Check if the file exists
+        if (file.exists()) {
+            // Try to delete the file
+            if (file.delete()) {
+                System.out.println("savegame file deleted successfully.");
+            } else {
+                System.out.println("Failed to delete the savegame file.");
+            }
+        } else {
+            System.out.println("savegame file does not exist.");
+        }
 
         System.out.println("\nThank you for playing connect-four.\n");
         System.out.println("< Developed by Yogesh Chandra Singh Samant >\n\n");
 
         s.close();
+
+        System.exit(0);
 
     }
 
@@ -65,15 +111,16 @@ public class App {
         // New branch test.
 
         Player currentplayer = player1;
+        Player opponentPlayer = player2;
         boolean isWinner = false;
 
         // SaveGame test.
-        SaveGame saveGame = new SaveGame(currentplayer.getGrid(), player1, player2);
-        saveGame.saveThisGame();
+        // SaveGame saveGame = new SaveGame(currentplayer.getGrid(), player1, player2);
+        // saveGame.saveThisGame();
 
         while (!currentplayer.getGrid().isFull() && !isWinner) {
             // Current player will take a turn and will check if the player won the game.
-            isWinner = currentplayer.takeTurn(s);
+            isWinner = currentplayer.takeTurn(s, opponentPlayer);
             System.out.println(currentplayer.getGrid());
 
             if (isWinner) {
@@ -83,22 +130,13 @@ public class App {
             }
 
             // Alternating current player to take turns.
+            opponentPlayer = currentplayer;
             currentplayer = (currentplayer == player1) ? player2 : player1;
 
         }
 
-        LoadGame loadGame = new LoadGame();
-        Object[] gameInfo = loadGame.LoadSavedGame();
-        Player loadPlayer1 = (Player) gameInfo[0];
-        Player loadPlayer2 = (Player) gameInfo[1];
-        Grid loadGrid = (Grid) gameInfo[2];
-
-        System.out.println(loadPlayer1);
-        System.out.println(loadPlayer2);
-        System.out.println(loadGrid);
-
         // System.out.println("Grid is full.\n");
-        System.out.println("GAME OVER");
+        System.out.println("\nGAME OVER\n");
 
     }
 
