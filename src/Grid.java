@@ -2,7 +2,7 @@ public class Grid {
     private Disc grid[][] = new Disc[6][7];
 
     public Grid() {
-        // Initialize an empty 6x7 grid.
+        // Initialize an 6x7 grid with empty '.' discs.
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
@@ -39,15 +39,17 @@ public class Grid {
 
     }
 
-    public int getGridRowLength(){
+    public int getGridRowLength() {
+        // Returns the no. of rows.
         return this.grid.length;
     }
 
     public int getGridColumnLength() {
+        // Returns the no. of columns.
         return this.grid[0].length;
     }
 
-    public char getDiscSymbolAt(int i, int j){
+    public char getDiscSymbolAt(int i, int j) {
         return this.grid[i][j].getSymbol();
     }
 
@@ -79,8 +81,23 @@ public class Grid {
     }
 
     public boolean checkWin(char symbol, int row, int col) {
+        // Checks if four discs are equal in row / column / diagonal.
         return this.checkColWin(symbol, row, col) || this.checkRowWin(symbol, row, col)
                 || this.checkDiagonalWinTLBR(symbol, row, col) || this.checkDiagonalWinBLTR(symbol, row, col);
+    }
+
+    public boolean checkColWin(char symbol, int row, int col) {
+        // Time complexity = O(1) - constant.
+        // Checks if 4 consecutive rows below the inserted disc is the same.
+
+        for (int i = row; i < row + 4; i++) {
+            // If the row exceedes the final row (6) OR if the symbols don't match,
+            // the player hasn't won yet.
+            if (i == this.getGridRowLength() || this.grid[i][col].getSymbol() != symbol) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean checkRowWin(char symbol, int row, int col) {
@@ -123,20 +140,6 @@ public class Grid {
 
         // Returns false since 4 symbols are not yet continous in a row.
         return false;
-    }
-
-    public boolean checkColWin(char symbol, int row, int col) {
-        // Time complexity = O(1) - constant.
-        // Checks if 4 consecutive rows below the inserted disc is the same.
-
-        for (int i = row; i < row + 4; i++) {
-            // If the row exceedes the final row (6) OR if the symbols don't match,
-            // the player hasn't won yet.
-            if (i == 6 || this.grid[i][col].getSymbol() != symbol) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public Boolean checkDiagonalWinTLBR(char symbol, int row, int col) {

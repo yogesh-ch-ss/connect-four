@@ -53,17 +53,26 @@ public class App {
             Player player1 = new Player(p1Name, p1Symbol, grid);
             Player player2 = new Player(p2Name, p2Symbol, grid);
 
+            // Both the players play on the same grid "grid".
+            // Thus, the same grid object is referenced.
+            // Updating player1's grid will reflect in player2's grid, and vice-versa,
+            // as they both are the essentially same referenced grid.
+
             playGame(player1, player2, s);
 
         } else {
             LoadGame loadGame = new LoadGame();
+            // gameInfo holds the player1, player2, and the grid objects.
+            // (ref. LoadGame.java)
             Object[] gameInfo = loadGame.LoadSavedGame();
 
             if (gameInfo.length < 1) {
+                // Saved game does not exist when gameInfo is an empty object.
                 System.out.println("No savegame exists. Goodbye!\n");
                 System.exit(0);
             }
 
+            // Creating the Player and Grid objects from gameInfo.
             Player player1 = (Player) gameInfo[0];
             Player player2 = (Player) gameInfo[1];
             Grid grid = (Grid) gameInfo[2];
@@ -76,16 +85,11 @@ public class App {
 
         }
 
-        // Both the players play on the same grid "grid".
-        // Thus, the same grid object is referenced.
-        // Updating player1's grid will reflect in player2's grid, and vice-versa,
-        // as they both are the essentially same referenced grid.
-
+        // Deleting the save game file when the game is over.
         File file = new File("src/savefile.txt");
 
-        // Check if the file exists
+        // Checking if the file exists and trying to delete it.
         if (file.exists()) {
-            // Try to delete the file
             if (file.delete()) {
                 System.out.println("savegame file deleted successfully.");
             } else {
@@ -96,7 +100,7 @@ public class App {
         }
 
         System.out.println("\nThank you for playing connect-four.\n");
-        System.out.println("< Developed by Yogesh Chandra Singh Samant >\n\n");
+        System.out.println("<<< Developed by Yogesh Chandra Singh Samant >>>\n\n");
 
         s.close();
 
@@ -120,6 +124,7 @@ public class App {
 
         while (!currentplayer.getGrid().isFull() && !isWinner) {
             // Current player will take a turn and will check if the player won the game.
+            // Feeding the opponentPlayer as well to enable the save game functionality.
             isWinner = currentplayer.takeTurn(s, opponentPlayer);
             System.out.println(currentplayer.getGrid());
 

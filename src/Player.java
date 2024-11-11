@@ -49,10 +49,15 @@ public class Player {
                                 "%s (%c) - Insert Disc - Enter the column number (or enter '0' to save and exit): ",
                                 this.name,
                                 this.symbol));
-                col = s.nextInt() - 1;
+                col = s.nextInt() - 1; // indexing it to 0 to help in array ops.
                 s.nextLine();
 
+                // If the input column is given as '0' (col = -1), the game will save and exit.
                 if (col == -1) {
+                    // 'this' is passed in player1 as it is the current turn of 'this' player.
+                    // While loading the game:
+                    // 'this' player will play the first turn, due to the above reason.
+                    // 'opponentPlayer' will play the second turn.
                     SaveGame saveGame = new SaveGame(this.getGrid(), this, opponentPlayer);
                     saveGame.saveThisGame();
                     System.out.println("Game saved successfully!");
@@ -63,7 +68,7 @@ public class Player {
                     // If the entered column is valid, disc drop will be attempted.
 
                     // successfullDiscDrop is true when the dropDisc() returns a valid row.
-                    // Unsuccessful drop disc is when dropDisc() returns -1. (ref. Grid.java)
+                    // Unsuccessful drop disc is when dropDisc() returns -1 (ref. Grid.java).
                     row = this.grid.dropDisc(this.symbol, col);
                     successfullDiscDrop = (row != -1) ? true : false;
 
