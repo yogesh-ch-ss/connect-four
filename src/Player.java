@@ -54,11 +54,13 @@ public class Player {
 
                 // If the input column is given as '0' (col = -1), the game will save and exit.
                 if (col == -1) {
-                    // 'this' is passed in player1 as it is the current turn of 'this' player.
+                    // 'this' is passed as player1 in the method as it is the current turn of 'this'
+                    // player.
                     // While loading the game:
                     // 'this' player will play the first turn, due to the above reason.
                     // 'opponentPlayer' will play the second turn.
                     SaveGame saveGame = new SaveGame(this.getGrid(), this, opponentPlayer);
+
                     saveGame.saveThisGame();
                     System.out.println("Game saved successfully!");
                     System.exit(0);
