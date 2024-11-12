@@ -32,6 +32,8 @@ public class Player {
         // Returns true if the player has won the game after taking the turn;
         // false otherwise since the game has to go on.
 
+        // Save-game feature will be triggered if the input is '0'.
+
         // Uses the same scanner object from App.java
 
         int col = -1;
@@ -44,6 +46,7 @@ public class Player {
             try {
 
                 // Trying to get the right input type for column - integer.
+                // Save-game feature will be triggered if the input is '0'.
                 System.out
                         .print(String.format(
                                 "%s (%c) - Insert Disc - Enter the column number (or enter '0' to save and exit): ",

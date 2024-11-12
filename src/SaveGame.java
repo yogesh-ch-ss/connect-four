@@ -2,6 +2,20 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+// How the save game feature works?
+// 1. SaveGame object gets the grid, player1, player2 objects.
+// 2. Checks if the game file exists by createSaveGameFile().
+//      - If it doesn't exist -> create file.
+//      - If it exists -> rewrites.
+// 3. Storing the game info in the following parsed format:
+/*  
+    * Player 1 name
+    * Player 1 symbol
+    * Player 2 name
+    * Player 2 symbol
+    * 6x7 game grid.
+*/
+
 public class SaveGame {
     private Grid grid;
     private Player player1;
@@ -15,6 +29,7 @@ public class SaveGame {
     }
 
     public void createSaveGameFile() {
+        // A method just to create a new file / check if the file exists.
         try {
             // Creating a new save game file.
             File newFile = new File("src/savefile.txt");
@@ -40,11 +55,13 @@ public class SaveGame {
             FileWriter savefile = new FileWriter("src/savefile.txt");
 
             // Storing the game info in the following format:
-            // Player 1 name
-            // Player 1 symbol
-            // Player 2 name
-            // Player 2 symbol
-            // 6x7 game grid.
+            /*
+             * Player 1 name
+             * Player 1 symbol
+             * Player 2 name
+             * Player 2 symbol
+             * 6x7 game grid.
+             */
 
             savefile.write(player1.getName() + "\n");
             savefile.write(player1.getSymbol() + "\n");

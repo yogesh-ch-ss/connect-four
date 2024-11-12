@@ -12,7 +12,7 @@ public class App {
 
         int startGame = 0;
         do {
-            System.out.print("Select game: \n 1. New Game \n 2. Load Saved Game \n\nEnter 1 or 2 >>>");
+            System.out.print("Select game: \n 1. New Game \n 2. Load Saved Game \n\nEnter 1 or 2 >>> ");
             startGame = s.nextInt();
             s.nextLine();
         } while (startGame != 1 && startGame != 2);
@@ -140,7 +140,8 @@ public class App {
 
         }
 
-        // System.out.println("Grid is full.\n");
+        if (currentplayer.getGrid().isFull())
+            System.out.println("Grid is full.\nGame Tied!");
         System.out.println("\nGAME OVER\n");
 
     }

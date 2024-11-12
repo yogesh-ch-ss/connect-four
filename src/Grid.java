@@ -82,6 +82,7 @@ public class Grid {
 
     public boolean checkWin(char symbol, int row, int col) {
         // Checks if four discs are equal in row / column / diagonal.
+
         return this.checkColWin(symbol, row, col) || this.checkRowWin(symbol, row, col)
                 || this.checkDiagonalWinTLBR(symbol, row, col) || this.checkDiagonalWinBLTR(symbol, row, col);
     }

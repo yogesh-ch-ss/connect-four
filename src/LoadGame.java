@@ -3,10 +3,28 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// How the load game feature works?
+// 1. Reads the save game file.
+// 2. Converts the text file to a String array.
+//      - Each line is a String in the String array.
+// 3. Extracing the game info using the following parsed format:
+/*  
+    * Player 1 name
+    * Player 1 symbol
+    * Player 2 name
+    * Player 2 symbol
+    * 6x7 game grid.
+*/
+// 4. Drops the disc on the grid object by reading the String array bottom-up.
+//      - Bottom-up because bottom discs are dropped first into the grid.
+// 5. Creates player1, player2, and grid objects using the info obtained.
+// 6. Returns player1, player2, and grid objects.
+//      - Returns an empty object if save game file doesn't exist.
+
 public class LoadGame {
 
     public Object[] LoadSavedGame() {
-        // Loads the game and returns the player1, player2, and grid object
+        // Loads the game and returns the player1, player2, and grid objects
         // to main game logic.
         try {
             File loadFile = new File("src/savefile.txt");
