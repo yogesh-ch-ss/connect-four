@@ -15,6 +15,11 @@ import java.io.IOException;
     * Player 2 symbol
     * 6x7 game grid.
 */
+/* 
+    Player 1 will be the current player when the game is loaded.
+    This is because the game is saved in currentPlayer's turn.
+    So currentPlayer will be considered as Player 1 while saving and loading.
+*/
 
 public class SaveGame {
     private Grid grid;

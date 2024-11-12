@@ -20,6 +20,11 @@ import java.util.Scanner;
 // 5. Creates player1, player2, and grid objects using the info obtained.
 // 6. Returns player1, player2, and grid objects.
 //      - Returns an empty object if save game file doesn't exist.
+/* 
+    Player 1 will be the current player when the game is loaded.
+    This is because the game is saved in currentPlayer's turn.
+    So currentPlayer will be considered as Player 1 while saving and loading.
+*/
 
 public class LoadGame {
 
