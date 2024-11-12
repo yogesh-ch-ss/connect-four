@@ -49,7 +49,7 @@ public class Player {
                 // Save-game feature will be triggered if the input is '0'.
                 System.out
                         .print(String.format(
-                                "%s (%c) - Insert Disc - Enter the column number (or enter '0' to save and exit): ",
+                                "%s (%c) - Insert Disc - Enter the column number 1-7 (or enter '0' to save and exit): ",
                                 this.name,
                                 this.symbol));
                 col = s.nextInt() - 1; // indexing it to 0 to help in array ops.

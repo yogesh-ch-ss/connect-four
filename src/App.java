@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App {
@@ -12,9 +13,14 @@ public class App {
 
         int startGame = 0;
         do {
-            System.out.print("Select game: \n 1. New Game \n 2. Load Saved Game \n\nEnter 1 or 2 >>> ");
-            startGame = s.nextInt();
-            s.nextLine();
+            try {
+                System.out.print("Select game: \n 1. New Game \n 2. Load Saved Game \n\nEnter 1 or 2 >>> ");
+                startGame = s.nextInt();
+                s.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("- - - Invalid input. Please enter a valid integer.\n");
+                s.nextLine();
+            }
         } while (startGame != 1 && startGame != 2);
 
         if (startGame == 1) {
@@ -56,7 +62,7 @@ public class App {
             // Both the players play on the same grid "grid".
             // Thus, the same grid object is referenced.
             // Updating player1's grid will reflect in player2's grid, and vice-versa,
-            // as they both are the essentially same referenced grid.
+            // as they both are essentially the same referenced grid.
 
             playGame(player1, player2, s);
 
@@ -86,18 +92,7 @@ public class App {
         }
 
         // Deleting the save game file when the game is over.
-        File file = new File("src/savefile.txt");
-
-        // Checking if the file exists and trying to delete it.
-        if (file.exists()) {
-            if (file.delete()) {
-                System.out.println("savegame file deleted successfully.");
-            } else {
-                System.out.println("Failed to delete the savegame file.");
-            }
-        } else {
-            System.out.println("savegame file does not exist.");
-        }
+        deleteSaveGameFile();
 
         System.out.println("\nThank you for playing connect-four.\n");
         System.out.println("<<< Developed by Yogesh Chandra Singh Samant >>>\n\n");
@@ -140,10 +135,27 @@ public class App {
 
         }
 
+        // When the grid gets full, the game is tied.
         if (currentplayer.getGrid().isFull())
             System.out.println("Grid is full.\nGame Tied!");
+
         System.out.println("\nGAME OVER\n");
 
+    }
+
+    public static void deleteSaveGameFile() {
+        File file = new File("src/savefile.txt");
+
+        // Checking if the file exists and trying to delete it.
+        if (file.exists()) {
+            if (file.delete()) {
+                System.out.println("savegame file deleted successfully.");
+            } else {
+                System.out.println("Failed to delete the savegame file.");
+            }
+        } else {
+            System.out.println("savegame file does not exist.");
+        }
     }
 
 }
