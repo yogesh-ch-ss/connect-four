@@ -26,19 +26,39 @@ public class App {
         if (startGame == 1) {
             // startGame = 1 => New Game
             // Create new Player and Grid objects.
-            System.out.print("Player 1 - Enter your Name >>> ");
-            String p1Name = s.nextLine();
+            String p1Name = "";
+            do {
+                try {
+                    System.out.print("Player 1 - Enter your Name >>> ");
+                    p1Name = s.nextLine();
+
+                } catch (Exception e) {
+                    System.out.println("Invalid Input");
+                }
+            } while (p1Name.length() < 1);
 
             char p1Symbol = 0;
             do {
-                System.out.print("Player 1 - Pick your Symbol -> X / O >>> ");
-                p1Symbol = s.nextLine().charAt(0);
+                try {
+                    System.out.print("Player 1 - Pick your Symbol -> X / O >>> ");
+                    p1Symbol = s.nextLine().charAt(0);
+                } catch (StringIndexOutOfBoundsException e) {
+                    System.out.println("Enter a valid symbol.");
+                }
             } while (p1Symbol != 'x' && p1Symbol != 'o' && p1Symbol != 'X' && p1Symbol != 'O');
 
             p1Symbol = Character.toUpperCase(p1Symbol);
 
-            System.out.print("Player 2 - Enter your Name >>> ");
-            String p2Name = s.nextLine();
+            String p2Name = "";
+            do {
+                try {
+                    System.out.print("Player 2 - Enter your Name >>> ");
+                    p2Name = s.nextLine();
+
+                } catch (Exception e) {
+                    System.out.println("Invalid Input");
+                }
+            } while (p2Name.length() < 1);
 
             char p2Symbol = 0;
             if (p1Symbol == 'x' || p1Symbol == 'X') {
