@@ -12,6 +12,7 @@ public class Grid {
         }
     }
 
+    @Override
     public String toString() {
         // Returning the 2D game grid with the column numbers.
 

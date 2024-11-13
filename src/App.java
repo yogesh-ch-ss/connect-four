@@ -4,15 +4,15 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws Exception {
+        // The main initiates the player and grid objects and invokes playGame().
 
         System.out.println("\n\nCONNECT FOUR\n");
-
-        // Getting the player info
 
         Scanner s = new Scanner(System.in);
 
         int startGame = 0;
         do {
+            // Getting the game info - New Game / Load Saved Game.
             try {
                 System.out.print("Select game: \n 1. New Game \n 2. Load Saved Game \n\nEnter 1 or 2 >>> ");
                 startGame = s.nextInt();
@@ -24,6 +24,8 @@ public class App {
         } while (startGame != 1 && startGame != 2);
 
         if (startGame == 1) {
+            // startGame = 1 => New Game
+            // Create new Player and Grid objects.
             System.out.print("Player 1 - Enter your Name >>> ");
             String p1Name = s.nextLine();
 
@@ -64,9 +66,12 @@ public class App {
             // Updating player1's grid will reflect in player2's grid, and vice-versa,
             // as they both are essentially the same referenced grid.
 
+            // Start playing the game.
             playGame(player1, player2, s);
 
         } else {
+            // startGame = 2 => Load Saved Game.
+            // Obtain Player and Grid objects from the save game file.
             LoadGame loadGame = new LoadGame();
             // gameInfo holds the player1, player2, and the grid objects.
             // (ref. LoadGame.java)
@@ -87,6 +92,7 @@ public class App {
             System.out.println(player2);
             System.out.println(grid);
 
+            // Start playing the game.
             playGame(player1, player2, s);
 
         }
@@ -144,6 +150,8 @@ public class App {
     }
 
     public static void deleteSaveGameFile() {
+        // Deletes the save game file.
+
         File file = new File("src/savefile.txt");
 
         // Checking if the file exists and trying to delete it.

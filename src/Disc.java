@@ -9,6 +9,7 @@ public class Disc {
         this.col = col;
     }
 
+    @Override
     public String toString() {
         return "" + this.symbol;
     }
